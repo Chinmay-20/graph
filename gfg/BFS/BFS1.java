@@ -45,10 +45,10 @@ class BFS1
 			
 			for(int index : adj.get(vertex))
 			{
-				if(visited[vertex]==false)
+				if(visited[index]==false)
 				{
-					visited[vertex]=true;
-					queue.add(vertex);
+					visited[index]=true;
+					queue.add(index);
 				}
 			}
 		}
@@ -74,7 +74,7 @@ class BFS1
 		addEdge(adj,2,3);
 		addEdge(adj,2,4);
 		addEdge(adj,3,4);
-		printGraph(adj);
+		//printGraph(adj);
 		BFS(adj,V, 0);
 	}
 }
