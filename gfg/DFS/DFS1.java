@@ -1,85 +1,57 @@
-// Java program to print DFS
-// traversal from a given
-// graph
-import java.io.*;
 import java.util.*;
 
-// This class represents a
-// directed graph using adjacency
-// list representation
-class Graph {
-	private int V; // No. of vertices
-
-	// Array of lists for
-	// Adjacency List Representation
-	private LinkedList<Integer> adj[];
-
-	// Constructor
-	@SuppressWarnings("unchecked") Graph(int v)
+class DFS1
+{
+	public static void DFSRec(ArrayList<ArrayList<Integer>> adj, int s, boolean[] visited)
 	{
-		V = v;
-		adj = new LinkedList[v];
-		for (int i = 0; i < v; ++i)
-			adj[i] = new LinkedList();
-	}
-
-	// Function to add an edge into the graph
-	void addEdge(int v, int w)
-	{
-		adj[v].add(w); // Add w to v's list.
-	}
-
-	// A function used by DFS
-	void DFSUtil(int v, boolean visited[])
-	{
-		// Mark the current node as visited and print it
-		visited[v] = true;
-		System.out.print(v + " ");
-
-		// Recur for all the vertices adjacent to this
-		// vertex
-		Iterator<Integer> i = adj[v].listIterator();
-		while (i.hasNext()) {
-			int n = i.next();
-			if (!visited[n])
-				DFSUtil(n, visited);
+		visited[s]=true;
+		System.out.print(s+" ");
+		
+		for(int index : adj.get(s))
+		{
+			if(visited[index]==false)
+			{
+				DFSRec(adj,index,visited);
+			}
 		}
 	}
-
-	// The function to do DFS traversal.
-	// It uses recursive
-	// DFSUtil()
-	void DFS(int v)
+	
+	public static void DFS(ArrayList<ArrayList<Integer>> adj,int v)
 	{
-		// Mark all the vertices as
-		// not visited(set as
-		// false by default in java)
-		boolean visited[] = new boolean[V];
-
-		// Call the recursive helper
-		// function to print DFS
-		// traversal
-		DFSUtil(v, visited);
+		boolean visited[]=new boolean[v];
+		
+		for(int index=0;index<v;index++)
+		{
+			if(visited[index]==false)
+			{
+				DFSRec(adj,index,visited);
+			}
+		}
 	}
-
-	// Driver's Code
+	
+	public static void addEdge(ArrayList<ArrayList<Integer>> adj,int u,int v)
+	{
+		adj.get(u).add(v);
+		adj.get(v).add(u);
+	}
+	
 	public static void main(String args[])
 	{
-		Graph g = new Graph(4);
-
-		g.addEdge(0, 1);
-		g.addEdge(0, 2);
-		g.addEdge(1, 2);
-		g.addEdge(2, 0);
-		g.addEdge(2, 3);
-		g.addEdge(3, 3);
-
-		System.out.println(
-			"Following is Depth First Traversal "
-			+ "(starting from vertex 2)");
-
-		// Function call
-		g.DFS(2);
+		int vertices=5;
+		
+		ArrayList<ArrayList<Integer>> adj=new ArrayList<ArrayList<Integer>>(vertices);
+		
+		for(int i=0;i<vertices;i++)
+		{
+			adj.add(new ArrayList<Integer>()); //we are adding empty cell to arraylist
+		}
+		addEdge(adj,0,1);
+		addEdge(adj,1,3);
+		addEdge(adj,0,2);
+		addEdge(adj,2,3);
+		addEdge(adj,1,4);
+		addEdge(adj,3,4);
+		
+		DFS(adj,vertices);
 	}
 }
-// This code is contributed by Aakash Hasija
